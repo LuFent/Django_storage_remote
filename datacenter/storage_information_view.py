@@ -11,9 +11,10 @@ def format_duration(duration):
     return f"{hours}ч {minutes}мин"
 
 
-def get_duration(visit_time):
-    now = localtime()
-    time_in_storage = now - visit_time
+def get_duration(visit_time, leaving_time):
+    if not leaving_time:
+        leaving_time = localtime()
+    time_in_storage = leaving_time - visit_time
     return time_in_storage
 
 
@@ -24,8 +25,8 @@ def storage_information_view(request):
         visitor_name = visit.passcard
         utc_time_entered = visit.entered_at
         msk_time_entered = localtime(utc_time_entered)
-        raw_duration = get_duration(msk_time_entered)
-        duration = format_duration(raw_duration)
+        duration = get_duration(msk_time_entered, localtime())
+        duration = format_duration(duration)
 
         non_closed_visits.append({
             'who_entered': visitor_name,
@@ -34,6 +35,6 @@ def storage_information_view(request):
         })
 
     context = {
-        'non_closed_visits': non_closed_visits,  # не закрытые посещения
+        'non_closed_visits': non_closed_visits,
     }
     return render(request, 'storage_information.html', context)
