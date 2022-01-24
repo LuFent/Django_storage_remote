@@ -1,37 +1,26 @@
 import os
-from dotenv import load_dotenv
+import dj_database_url
+from environs import Env
 
-load_dotenv()
 
+env = Env()
+env.read_env()
 
-DATABASES = {
-    'default': {
-        'ENGINE': os.getenv("DB_ENGINE"),
-        'HOST': os.getenv("DB_HOST"),
-        'PORT': os.getenv("DB_PORT"),
-        'NAME': os.getenv("DB_NAME"),
-        'USER': os.getenv("DB_USER"),
-        'PASSWORD': os.getenv("DB_PASSWORD"),
-    }
-}
+DEBUG = env.bool('DEBUG', False)
+
+DATABASES = dict()
+DATABASES["default"] = dj_database_url.parse(env('DB_URL'))
 
 INSTALLED_APPS = ['datacenter']
 
-SECRET_KEY = 'REPLACE_ME'
+SECRET_KEY = env("SECRET_KEY")
 
-
-DEBUG = os.getenv("DEBUG").lower()
-if DEBUG == "true":
-    DEBUG = True
-elif DEBUG == "false":
-    DEBUG = False
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 ROOT_URLCONF = "project.urls"
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
