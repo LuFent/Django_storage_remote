@@ -10,9 +10,17 @@ Python3 должен быть уже установлен.
 pip install -r requirements.txt
 ```
 
+Создайте файл .env в папке "project" и заполните его слудующим содержанием:
+```
+export DEBUG=<Значение переменной DEBUG - True или False>
+export DB_URL=<Ссылка на бд (библиотека dj-database-url)>
+export SECRET_KEY=<Ваш SECRET KEY>
+export ALLOWED_HOSTS=<Список разрешенных хостов>
+```
+
 Запустите скрипт командой
 ```
-python main.py
+python manage.py runserver 0.0.0.0:8000
 ```
 
 Перейдите по ссылке "http://127.0.0.1:8000/"
