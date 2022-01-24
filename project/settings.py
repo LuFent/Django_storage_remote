@@ -6,12 +6,12 @@ from environs import Env
 env = Env()
 env.read_env()
 
-DEBUG = env.bool('DEBUG', False)
+DEBUG = env.bool("DEBUG", False)
 
 DATABASES = dict()
-DATABASES["default"] = dj_database_url.parse(env('DB_URL'))
+DATABASES["default"] = dj_database_url.parse(env("DB_URL"))
 
-INSTALLED_APPS = ['datacenter']
+INSTALLED_APPS = ["datacenter"]
 
 SECRET_KEY = env("SECRET_KEY")
 
@@ -23,9 +23,9 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
-        'APP_DIRS': True,
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        "APP_DIRS": True,
     },
 ]
 
